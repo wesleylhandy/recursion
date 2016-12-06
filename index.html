@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recursion</title>
+
+  <!-- Latest compiled and minified Bootstrap & jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!--Google Fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Raleway|Ubuntu" rel="stylesheet">
+  <!--Font Awesome-->
+  <script src="https://use.fontawesome.com/5f1f3cb4d3.js"></script>
+  <!--custom css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+<body>
+
+  <div class = "jumbotron">
+    <h1>Recursion Through an Object to Find a Particular Value</h1>
+  </div>
+  <!--form input -->
+  <div class = "container">
+    <div class = "row">
+      <div class = "col-xs-12 col-sm-10 col-md-8 col-lg-8">
+        <!--Prompt for input-->
+        <h3 class = "theme-color">Enter an item:&nbsp;</h3>
+        <!--Text Input + Submit Button-->
+        <form id = "txt-entry">
+          <div class = "form-group">
+            <div class = "col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <input type="text" class = "form-control" label = "item" id="itemEntry">
+              <br><br>
+            </div>
+            <div class="xs-col-12 col-sm-12 col-md-6 col-lg-6">
+              <input type = "button" class="btn btn-primary" value = "Submit" id = "submit">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--results of Form Submittal displayed-->
+  <div class = "container">
+    <div class = "well" id="results-window">
+      <div class = "row">
+        <div class = "col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h2>Results</h2>
+        </div>
+        <!--Displays item entered by user and cobWeb containing-->
+        <div class = "col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <p><span id = "item"></span><span id = "web"></span></p>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+  <footer class = "footer text-center">
+    <span>Copyright <i class="fa fa-copyright" aria-hidden="true"></i>2016 Wesley L. Handy</span>
+    <div id = "gh-link"><a href="https://github.com/wesleylhandy/recursion" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a></div>
+  </footer>
+
+  <script src="assets/js/logic.js"></script>
+
+</body>
+</html>
