@@ -1,0 +1,99 @@
+html {
+	
+  	min-height: 100%;
+}
+
+/* 
+--- Palette:
+ #5D4101 - very dark gold
+ #896619; - dark gold - primary text
+ #D9B76C; - medium gold
+ #FFE5AA; - light gold
+ #2D195E; - dark blue - headings, primary button
+ #8D7DB2; - light blue - secondary text, drop shadow
+
+ #114954; - dark teal;
+ #6D99A1; - light teal;
+ */
+
+body {
+	color: #896619;
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 125%;
+	background-image: url(../images/wov/wov.png);
+	height: 100%;
+}
+
+.jumbotron {
+	background-color: #FFE5AA;
+	border-bottom-style: solid;
+	border-bottom-color: #896619;
+	border-bottom-width: .325em;
+	font-family: 'Raleway', sans-serif;
+}
+
+.jumbotron h1 {
+	text-align: center;
+	filter: drop-shadow(0.05em 0.05em 0em #6D99A1);
+}
+.jumbotron p {
+	padding-left: 21%;
+	filter: drop-shadow(0.05em 0.05em 0em #908485);
+}
+
+.btn, .btn-primary, .btn-primary:active, .btn-primary:focus, .btn-primary:visited, .btn-primary:target {
+	color: #896619;
+	background-color: #FFE5AA;	
+	border-color: #896619;
+}
+
+.btn-primary:hover {
+	color: #5D4101;
+	border-color: #5D4101;
+	background-color: #D9B76C;
+}
+
+h2 {
+	text-decoration: underline;
+}
+
+
+#results-window {
+	padding-bottom: 6em;
+	margin-bottom: 2em;
+	border: 2px solid #FFE5AA;
+	outline: 2px solid #896619;
+	color: #6D99A1;
+}
+
+#results {
+	color: #896619;
+}
+
+.footer {
+	margin-top: 0.5em;
+	padding-top: 0.5em;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 6em;
+	/*color: #522C2F;*/
+	background-color: #FFE5AA;
+	border-top-style: solid;
+	border-top-color: #6D99A1;
+	border-top-width: .325em;
+}
+
+.footer a:link {
+    text-decoration: none;
+    color: black;
+    font-size: 2em;
+}
+
+.footer a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.footer a:hover {
+    filter: drop-shadow(0.063em 0.063em 0em #6D99A1);
+}
