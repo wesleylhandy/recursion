@@ -66,9 +66,22 @@ h2 {
 	color: #6D99A1;
 }
 
+@keyframes blink {
+	0% {opacity: 0;}
+	25% {opacity: 0.5;}
+	50% {opacity: 1;}
+	75% {opacity: 0.5;}
+	100% {opacity: 0;}
+}
+
 #results {
 	color: #896619;
+	animation-duration: 2s;
+  	animation-name: blink;
+  	animation-iteration-count: infinite;
 }
+
+
 
 .footer {
 	margin-top: 0.5em;

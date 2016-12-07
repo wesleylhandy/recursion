@@ -82,6 +82,7 @@ function recursion() {
   found = false;
   //empty display for new values
   $("#web").text("");
+  $("#results").css("animation", "none");
   // get value of input to pass into flatten()
   let val = $("#itemEntry").val();
   console.log(val);
