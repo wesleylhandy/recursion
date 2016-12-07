@@ -111,24 +111,59 @@ $("#submit").on("click", function() {
 });
 
 //in progress - creating breadcrumbs from object
-let breadCrumbsArray = [];
-let parent = "theCobWeb";
-function createBreadCrumbs (parent, child) {
-  if (typeof child === "string") {
-    breadCrumbsArray.push(parent);
-    return; 
-  }
-  
-  let key = Object.keys(child);
-  for (key in child) {
-    var web = child[key];
-    if (!(parseInt(key) >= 0)) {
-      parent = parent + "." + key;
+//for now only shows in console
+
+let breadCrumbs = {
+  breadCrumbsArray : [],
+  parent : "theCobWeb",
+  createBreadCrumbs : function (parent, child) {
+    if (typeof child === "string") {
+      this.breadCrumbsArray.push(parent);
+      return; 
     }
-    createBreadCrumbs(parent, web);
+    //compile breadcrumb trail using parent and key
+    //then recursion passing parent and new child
+    let key = Object.keys(child);
+    for (key in child) {
+      var web = child[key];
+      if (!(parseInt(key) >= 0)) {
+        parent = parent + "." + key;
+      }
+      this.createBreadCrumbs(parent, web);
+    }
+  },
+  cleanUpArray : function (bcArray) {
+    //remove extraneous item(s) from middle of breadcrumbs
+    for (let x = 0; x < bcArray.length; x++) {
+      //break apart breadcrumb array
+      let breadCrumb = bcArray[x].split(".");
+      for (let z = 0; z < breadCrumb.length; z++) {
+        //check for item(s) in the middle of array and delete
+        if ((breadCrumb[z] === "item" 
+          || breadCrumb[z] === "items") 
+          && z !== (breadCrumb.length -1)) {
+          breadCrumb.splice(z, 1);
+        }
+      }
+      //put breadcrumb back together in dot notation
+      let newBreadCrumb = breadCrumb.join(".");
+      bcArray[x] = newBreadCrumb;
+    }
+    //remove duplicates
+    for (let dupCheck = bcArray.length - 1;
+          dupCheck > 0; dupCheck--) {
+      if (bcArray[dupCheck] === bcArray[dupCheck - 1]) {
+        let c = bcArray.splice(dupCheck, 1);
+      }
+    }
+  },
+  start : function () {
+    this.createBreadCrumbs(this.parent, theCobWeb);
+    this.cleanUpArray(this.breadCrumbsArray);
   }
 }
-createBreadCrumbs(parent, theCobWeb);
-console.log(breadCrumbsArray);
 
-//children 
+breadCrumbs.start(); // can be called by a DOM event
+console.log(breadCrumbs.breadCrumbsArray);
+
+//use bc array to display tree in browser
