@@ -16,7 +16,10 @@ var theCobWeb = {
           items: ["toenails", "lint", "wrapper", "homework"]
         },
         otherTinyWeb: {
-          item: ["quarter", "nickel", "pennies"]
+          items: ["quarter", "nickel", "pennies"],
+          superTinyWeb: {
+            item: "dime"
+          }
         }
       }
     },
@@ -106,3 +109,26 @@ $("form").submit(function(event) {
 $("#submit").on("click", function() {
   recursion();
 });
+
+//in progress - creating breadcrumbs from object
+let breadCrumbsArray = [];
+let parent = "theCobWeb";
+function createBreadCrumbs (parent, child) {
+  if (typeof child === "string") {
+    breadCrumbsArray.push(parent);
+    return; 
+  }
+  
+  let key = Object.keys(child);
+  for (key in child) {
+    var web = child[key];
+    if (!(parseInt(key) >= 0)) {
+      parent = parent + "." + key;
+    }
+    createBreadCrumbs(parent, web);
+  }
+}
+createBreadCrumbs(parent, theCobWeb);
+console.log(breadCrumbsArray);
+
+//children 
