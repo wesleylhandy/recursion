@@ -110,60 +110,66 @@ $("#submit").on("click", function() {
   recursion();
 });
 
-//in progress - creating breadcrumbs from object
-//for now only shows in console
+//creates stack constructor to converting object into a stack
+function Stack() {
+  this._size = 0;
+  this._storage = {};
+  this._level = 0;
+};
 
-let breadCrumbs = {
-  breadCrumbsArray : [],
-  parent : "theCobWeb",
-  createBreadCrumbs : function (parent, child) {
-    if (typeof child === "string") {
-      this.breadCrumbsArray.push(parent);
-      return; 
-    }
-    //compile breadcrumb trail using parent and key
-    //then recursion passing parent and new child
-    let key = Object.keys(child);
-    for (key in child) {
-      var web = child[key];
-      if (!(parseInt(key) >= 0)) {
-        parent = parent + "." + key;
-      }
-      this.createBreadCrumbs(parent, web);
-    }
-  },
-  cleanUpArray : function (bcArray) {
-    //remove extraneous item(s) from middle of breadcrumbs
-    for (let x = 0; x < bcArray.length; x++) {
-      //break apart breadcrumb array
-      let breadCrumb = bcArray[x].split(".");
-      for (let z = 0; z < breadCrumb.length; z++) {
-        //check for item(s) in the middle of array and delete
-        if ((breadCrumb[z] === "item" 
-          || breadCrumb[z] === "items") 
-          && z !== (breadCrumb.length -1)) {
-          breadCrumb.splice(z, 1);
-        }
-      }
-      //put breadcrumb back together in dot notation
-      let newBreadCrumb = breadCrumb.join(".");
-      bcArray[x] = newBreadCrumb;
-    }
-    //remove duplicates
-    for (let dupCheck = bcArray.length - 1;
-          dupCheck > 0; dupCheck--) {
-      if (bcArray[dupCheck] === bcArray[dupCheck - 1]) {
-        let c = bcArray.splice(dupCheck, 1);
-      }
-    }
-  },
-  start : function () {
-    this.createBreadCrumbs(this.parent, theCobWeb);
-    this.cleanUpArray(this.breadCrumbsArray);
+Stack.prototype.add = function(data) {
+  // increases the size of our storage
+    var size = this._size++;
+    var level = this._level;
+ 
+    // assigns size as a key of storage
+    // assigns data as the value of this key
+    this._storage[size] = [data, level];
+};
+
+Stack.prototype.retrieve = function() {
+  var size = this._size,
+        deletedData;
+
+  if (size) {
+    //gets value of the key for last element (size) of Stack
+    deletedData = this._storage[size];
+ 
+    //deletes last element from stack
+    //reduces size (current key)
+    delete this._storage[size];
+    this.size--;
+ 
+    return deletedData;
   }
-}
+};
 
-breadCrumbs.start(); // can be called by a DOM event
-console.log(breadCrumbs.breadCrumbsArray);
+// new instance of Stack
+var webStack = new Stack();
 
-//use bc array to display tree in browser
+function pushToStack(level, webs) {
+  /*
+    stops recursion at the lowest level, 
+    when web passed in as an argument is no longer an object, 
+    or array.
+  */
+  if (typeof webs === "string" || Array.isArray(webs)) {
+    level--;
+    return;
+    
+  }  
+
+  //adds keys to stack
+  //changes level
+  webStack._level = level;
+  webStack.add(Object.keys(webs));
+  level++;
+  
+    
+  //recursion on values to go down one level
+  Object.values(webs).forEach(function(element) {pushToStack(level, element)});
+
+};
+
+pushToStack(0, theCobWeb);
+console.log(webStack._storage);
