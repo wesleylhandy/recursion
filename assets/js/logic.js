@@ -1,3 +1,5 @@
+console.log("This site also creates a stack of the object under consideration.");
+
 /*
   global variable to test if item was found in the web
   needs to be called by on(click, function).
@@ -114,8 +116,8 @@ $("#submit").on("click", function() {
 //creates stack constructor to converting object into a stack
 function Stack() {
   this._size = 0;
-  this._storage = {};
-  this._level = "0.0";
+  this._storage = [];
+  //this._level = "0.0";
 };
 
 Stack.prototype.add = function(data) {
@@ -125,7 +127,7 @@ Stack.prototype.add = function(data) {
  
     // assigns size as a key of storage
     // assigns data as the value of this key
-    this._storage[size] = [data, level];
+    this._storage[size] = data; // [data, level]
 };
 
 Stack.prototype.retrieve = function() {
@@ -148,18 +150,7 @@ Stack.prototype.retrieve = function() {
 var webStack = new Stack();
 
 function pushToStack(level, index, webs) {
-  
-  // stop @ item or items w/o going into items array
-  // if (typeof webs === "string" || Array.isArray(webs)) {
-  //   return;
-  // }  
 
-  //adds keys to stack
-  //changes level
-  webStack._level = level + "." + index;
-  webStack.add(Object.keys(webs));
-  level++;
-  
   /*
     stops recursion at the lowest level, 
     when web passed in as an argument is no longer 
@@ -169,11 +160,39 @@ function pushToStack(level, index, webs) {
     return;
   }
   
+  // stop @ item or items w/o going into items array
+  // if (typeof webs === "string" || Array.isArray(webs)) {
+  //   return;
+  // }  
+
+  //adds keys to stack
+  //changes level
+  //webStack._level = level + "." + index;
+  //webStack.add(Object.keys(webs));
+
+  var parentMap = Object.keys(webs).map(function(k,i) { 
+    return { key: k, parent : index, level: level }
+  });
+
+  webStack.add(parentMap);
+  // console.log("=====parentMap=====");
+  // console.log(parentMap);
+  level++;
+  
+
+  
     
   //recursion on values to go down one level
-  Object.values(webs).forEach(function(element, index) {pushToStack(level, index, element)});
+
+  parentMap.forEach(function(o,i) {
+    pushToStack(level, o.key, (webs[o.key]));
+  });
+
+  // Object.values(webs).forEach(
+  //   function(element, i) 
+  //   {pushToStack(level, index, element)});
 
 };
 
-pushToStack(0, 0, theCobWeb);
+pushToStack(0, null, theCobWeb);
 console.log(webStack._storage);
