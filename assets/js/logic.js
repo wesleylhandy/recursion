@@ -88,7 +88,7 @@ function recursion() {
   $("#results").css("animation", "none");
   // get value of input to pass into flatten()
   let val = $("#itemEntry").val();
-  console.log(val);
+  //console.log(val);
   //display item being investigated to user
   $("#item").text(val);
   //call function
@@ -96,6 +96,7 @@ function recursion() {
   //will only show if item is not found in flatten()
   if (found === false) {
     $("#web").text(" was not found in this web.");
+    console.log(val + " was not found in this object.");
   }
 }
 
@@ -114,7 +115,7 @@ $("#submit").on("click", function() {
 function Stack() {
   this._size = 0;
   this._storage = {};
-  this._level = 0;
+  this._level = "0.0";
 };
 
 Stack.prototype.add = function(data) {
@@ -144,32 +145,35 @@ Stack.prototype.retrieve = function() {
   }
 };
 
-// new instance of Stack
 var webStack = new Stack();
 
-function pushToStack(level, webs) {
-  /*
-    stops recursion at the lowest level, 
-    when web passed in as an argument is no longer an object, 
-    or array.
-  */
-  if (typeof webs === "string" || Array.isArray(webs)) {
-    level--;
-    return;
-    
-  }  
+function pushToStack(level, index, webs) {
+  
+  // stop @ item or items w/o going into items array
+  // if (typeof webs === "string" || Array.isArray(webs)) {
+  //   return;
+  // }  
 
   //adds keys to stack
   //changes level
-  webStack._level = level;
+  webStack._level = level + "." + index;
   webStack.add(Object.keys(webs));
   level++;
   
+  /*
+    stops recursion at the lowest level, 
+    when web passed in as an argument is no longer 
+    an object, or array.
+  */
+  if (typeof webs === "string") {
+    return;
+  }
+  
     
   //recursion on values to go down one level
-  Object.values(webs).forEach(function(element) {pushToStack(level, element)});
+  Object.values(webs).forEach(function(element, index) {pushToStack(level, index, element)});
 
 };
 
-pushToStack(0, theCobWeb);
+pushToStack(0, 0, theCobWeb);
 console.log(webStack._storage);

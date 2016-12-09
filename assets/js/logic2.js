@@ -35,7 +35,7 @@ var theCobWeb = {
 function Stack() {
   this._size = 0;
   this._storage = {};
-  this._level = 0;
+  this._level = "0.0";
 };
 
 Stack.prototype.add = function(data) {
@@ -67,29 +67,29 @@ Stack.prototype.retrieve = function() {
 
 var webStack = new Stack();
 
-function pushToStack(level, webs) {
+function pushToStack(level, index, webs) {
   /*
     stops recursion at the lowest level, 
     when web passed in as an argument is no longer an object, 
     or array.
   */
   if (typeof webs === "string" || Array.isArray(webs)) {
-    level--;
+    //level--;
     return;
     
   }  
 
   //adds keys to stack
   //changes level
-  webStack._level = level;
+  webStack._level = level + "." + index;
   webStack.add(Object.keys(webs));
   level++;
   
     
   //recursion on values to go down one level
-  Object.values(webs).forEach(function(element) {pushToStack(level, element)});
+  Object.values(webs).forEach(function(element, index) {pushToStack(level, index, element)});
 
 };
 
-pushToStack(0, theCobWeb);
+pushToStack(0, 0, theCobWeb);
 console.log(webStack._storage);
