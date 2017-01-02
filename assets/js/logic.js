@@ -1,3 +1,8 @@
+//set date
+var d = new Date();
+var year = d.getFullYear();
+$("#year").text(year);
+
 console.log("This site also creates a stack of the object under consideration.");
 
 /*

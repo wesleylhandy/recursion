@@ -32,6 +32,10 @@ var theCobWeb = {
   }
 };
 
+
+var webMap = new Map (theCobWeb);
+console.log(webMap);
+
 function Stack() {
   this._size = 0;
   this._storage = {};
